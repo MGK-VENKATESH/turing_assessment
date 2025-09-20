@@ -6,7 +6,7 @@ SOURCES_JSON = "data/sources.json"
 
 os.makedirs("data", exist_ok=True)
 
-# load sources.json to map title -> url (if you have it)
+
 sources = {}
 if os.path.exists(SOURCES_JSON):
     with open(SOURCES_JSON, "r", encoding="utf-8") as f:
@@ -33,7 +33,7 @@ for fname in sorted(os.listdir(CHUNK_DIR)):
     path = os.path.join(CHUNK_DIR, fname)
     with open(path, "r", encoding="utf-8") as f:
         text = f.read().strip()
-    # extract a source title from filename heuristically (before _chunk)
+    
     source_title = fname.split("_chunk")[0].replace(".txt","")
     url = sources.get(source_title, "")
     chunk_id = str(uuid.uuid4())
