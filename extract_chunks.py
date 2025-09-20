@@ -1,12 +1,12 @@
 import os
 import pdfplumber
 
-# Paths
+
 pdf_folder = "data/raw_pdfs"
 chunks_folder = "data/chunks"
 os.makedirs(chunks_folder, exist_ok=True)
 
-# Chunk size
+
 CHUNK_SIZE = 300  # words per chunk
 
 def split_into_chunks(text, chunk_size=CHUNK_SIZE):
@@ -17,7 +17,7 @@ def split_into_chunks(text, chunk_size=CHUNK_SIZE):
         chunks.append(chunk_text)
     return chunks
 
-# Process all PDFs
+
 for pdf_file in os.listdir(pdf_folder):
     if pdf_file.endswith(".pdf"):
         pdf_path = os.path.join(pdf_folder, pdf_file)
@@ -27,10 +27,10 @@ for pdf_file in os.listdir(pdf_folder):
                 full_text = ""
                 for page in pdf.pages:
                     full_text += page.extract_text() + "\n"
-            # Split into chunks
+            
             chunks = split_into_chunks(full_text)
             
-            # Save each chunk as a separate file
+            
             base_name = os.path.splitext(pdf_file)[0]
             for idx, chunk in enumerate(chunks):
                 chunk_filename = f"{base_name}_chunk{idx+1}.txt"
