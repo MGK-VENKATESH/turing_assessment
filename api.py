@@ -7,7 +7,7 @@ app = FastAPI()
 class AskRequest(BaseModel):
     q: str
     k: int = 5
-    mode: str = "hybrid"  # "baseline" or "hybrid"
+    mode: str = "hybrid"  
 
 @app.post("/ask")
 def ask_endpoint(req: AskRequest):
