@@ -1,27 +1,22 @@
 import json
-from answerer import ask  # make sure this imports your function
+from answerer import ask  
 
-# -------------------------
-# Load 8 questions
-# -------------------------
 with open("8_questions.json", "r") as f:
     questions = json.load(f)
 
 results = []
 
-# -------------------------
-# Evaluate each question
-# -------------------------
+
 for q in questions:
     baseline = ask(q, k=5, mode="baseline") or {}
     hybrid = ask(q, k=5, mode="hybrid") or {}
 
-    # Safely get scores
+    
     baseline_score = baseline.get('score', 0) 
     hybrid_score = hybrid.get('score', 0)
     improved = hybrid_score > baseline_score
 
-    # Get answers or indicate abstain
+    
     baseline_answer = baseline.get('answer') or 'ABSTAIN'
     hybrid_answer = hybrid.get('answer') or 'ABSTAIN'
 
@@ -34,16 +29,14 @@ for q in questions:
         "improved": improved
     })
 
-# -------------------------
-# Write Markdown table
-# -------------------------
+
 md_lines = [
     "| Question | Baseline Answer | Baseline Score | Hybrid Answer | Hybrid Score | Improved? |",
     "|----------|----------------|----------------|---------------|--------------|-----------|"
 ]
 
 for r in results:
-    # truncate long answers for display
+    
     baseline_display = (r['baseline_answer'][:50] + "...") if r['baseline_answer'] != 'ABSTAIN' else 'ABSTAIN'
     hybrid_display = (r['hybrid_answer'][:50] + "...") if r['hybrid_answer'] != 'ABSTAIN' else 'ABSTAIN'
 
